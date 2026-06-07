@@ -1,0 +1,19 @@
+project_id = "wntirdnrpuygdqwssarb"
+
+[functions.generate-aptitude]
+verify_jwt = false
+
+[functions.analyze-aptitude]
+verify_jwt = false
+
+[functions.evaluate-coding]
+verify_jwt = false
+
+[functions.hr-interview]
+verify_jwt = false
+
+[functions.analyze-resume]
+verify_jwt = false
+
+[functions.ai-tip]
+verify_jwt = false
