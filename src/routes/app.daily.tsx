@@ -38,7 +38,7 @@ function Daily() {
         transition={{ duration: 0.5, delay: 0.1 }}
       >
         <Link
-          to="/app/aptitude/take"
+          to="/app/aptitude/test"
           search={{ topic: "Quantitative Aptitude", subtopic: "Percentages", difficulty: "Medium", mode: "test", count: 5 }}
         >
           <Card className="p-7 hover-lift cursor-pointer group">

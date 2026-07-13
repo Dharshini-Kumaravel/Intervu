@@ -149,7 +149,7 @@ function TakeAptitude() {
         streak_days: streak, last_active_date: today
       }).eq("user_id", user.id);
 
-      router.navigate({ to: "/app/aptitude/result", search: { id: attempt.id } });
+      router.navigate({ to: "/app/aptitude/results", search: { id: attempt.id } });
     } catch (e: any) {
       toast.error(e.message || "Failed to save attempt");
       setSubmitting(false);

@@ -18,6 +18,7 @@ function Result() {
   const { id } = Route.useSearch();
   const [attempt, setAttempt] = useState<any>(null);
   const [logs, setLogs] = useState<any[]>([]);
+  const [showTamil, setShowTamil] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
     (async () => {
@@ -132,6 +133,42 @@ function Result() {
                   </div>
                   <div className="text-sm mt-2 text-foreground/70"><strong>Explanation:</strong> {l.explanation}</div>
                   <div className="text-sm mt-1 text-foreground/70"><strong>Shortcut:</strong> {l.shortcut}</div>
+                  
+                  {/* Show in Tamil Toggle */}
+                  <div className="mt-3">
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => setShowTamil(prev => ({ ...prev, [l.id]: !prev[l.id] }))}
+                      className={`text-xs border-primary/20 h-7 ${showTamil[l.id] ? "bg-primary/20 text-primary-deep" : "text-muted-foreground hover:bg-secondary"}`}
+                    >
+                      Show in Tamil ❤️
+                    </Button>
+                    
+                    {showTamil[l.id] && (
+                      <div className="mt-2 p-3.5 bg-primary-soft/50 border border-primary/25 rounded-xl text-xs leading-relaxed animate-float-up text-foreground">
+                        <div className="font-bold text-primary-deep text-[10px] uppercase tracking-wider mb-1">Bilingual Explanation (தமிழ் + English)</div>
+                        <p>
+                          <strong>விளக்கம்:</strong> {
+                            (() => {
+                              const terms: Record<string, string> = {
+                                "speed": "வேகம் (Speed)", "distance": "தூரம் (Distance)", "time": "நேரம் (Time)",
+                                "percentage": "சதவீதம் (Percentage)", "ratio": "விகிதம் (Ratio)", "work": "வேலை (Work)",
+                                "profit": "லாபம் (Profit)", "loss": "நஷ்டம் (Loss)", "probability": "நிகழ்தகவு (Probability)"
+                              };
+                              let translated = l.explanation;
+                              Object.entries(terms).forEach(([eng, tam]) => {
+                                const regex = new RegExp(eng, "gi");
+                                translated = translated.replace(regex, tam);
+                              });
+                              return `${translated} — Shortcut check: ${l.shortcut}.`;
+                            })()
+                          }
+                        </p>
+                      </div>
+                    )}
+                  </div>
+
                   <div className="flex gap-2 mt-2 text-xs">
                     <Badge variant="outline" className="gap-1"><Clock className="w-3 h-3" /> {l.time_taken_sec}s vs {l.ideal_time_sec}s</Badge>
                     {l.mistake_type && <Badge variant="outline" className="capitalize">{l.mistake_type.replace("_", " ")}</Badge>}

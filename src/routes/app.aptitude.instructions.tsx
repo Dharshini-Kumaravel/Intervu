@@ -153,7 +153,7 @@ function Section({ step, title, subtitle, children }: any) {
 
 function ModeLink({ topic, subtopic, difficulty, mode, label, count }: any) {
   return (
-    <Link to="/app/aptitude/take" search={{ topic, subtopic, difficulty, mode, count }} className="group">
+    <Link to="/app/aptitude/test" search={{ topic, subtopic, difficulty, mode, count }} className="group">
       <Button variant="outline" className="w-full group-hover:bg-primary-soft group-hover:border-primary transition-all">
         {label} <ChevronRight className="w-3 h-3 ml-1 opacity-50 group-hover:opacity-100 group-hover:translate-x-0.5 transition" />
       </Button>

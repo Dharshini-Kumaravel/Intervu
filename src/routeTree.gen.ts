@@ -18,7 +18,10 @@ import { Route as AppResumeRouteImport } from './routes/app.resume'
 import { Route as AppProfileRouteImport } from './routes/app.profile'
 import { Route as AppIntervuRouteImport } from './routes/app.intervu'
 import { Route as AppHrRouteImport } from './routes/app.hr'
+import { Route as AppEnglishCoachRouteImport } from './routes/app.english-coach'
+import { Route as AppDoubtAssistantRouteImport } from './routes/app.doubt-assistant'
 import { Route as AppDailyRouteImport } from './routes/app.daily'
+import { Route as AppConversationPracticeRouteImport } from './routes/app.conversation-practice'
 import { Route as AppCodingRouteImport } from './routes/app.coding'
 import { Route as AppAptitudeRouteImport } from './routes/app.aptitude'
 import { Route as AppAnalyticsRouteImport } from './routes/app.analytics'
@@ -74,9 +77,24 @@ const AppHrRoute = AppHrRouteImport.update({
   path: '/hr',
   getParentRoute: () => AppRoute,
 } as any)
+const AppEnglishCoachRoute = AppEnglishCoachRouteImport.update({
+  id: '/english-coach',
+  path: '/english-coach',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppDoubtAssistantRoute = AppDoubtAssistantRouteImport.update({
+  id: '/doubt-assistant',
+  path: '/doubt-assistant',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppDailyRoute = AppDailyRouteImport.update({
   id: '/daily',
   path: '/daily',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppConversationPracticeRoute = AppConversationPracticeRouteImport.update({
+  id: '/conversation-practice',
+  path: '/conversation-practice',
   getParentRoute: () => AppRoute,
 } as any)
 const AppCodingRoute = AppCodingRouteImport.update({
@@ -133,7 +151,10 @@ export interface FileRoutesByFullPath {
   '/app/analytics': typeof AppAnalyticsRoute
   '/app/aptitude': typeof AppAptitudeRouteWithChildren
   '/app/coding': typeof AppCodingRouteWithChildren
+  '/app/conversation-practice': typeof AppConversationPracticeRoute
   '/app/daily': typeof AppDailyRoute
+  '/app/doubt-assistant': typeof AppDoubtAssistantRoute
+  '/app/english-coach': typeof AppEnglishCoachRoute
   '/app/hr': typeof AppHrRoute
   '/app/intervu': typeof AppIntervuRoute
   '/app/profile': typeof AppProfileRoute
@@ -153,7 +174,10 @@ export interface FileRoutesByTo {
   '/app/analytics': typeof AppAnalyticsRoute
   '/app/aptitude': typeof AppAptitudeRouteWithChildren
   '/app/coding': typeof AppCodingRouteWithChildren
+  '/app/conversation-practice': typeof AppConversationPracticeRoute
   '/app/daily': typeof AppDailyRoute
+  '/app/doubt-assistant': typeof AppDoubtAssistantRoute
+  '/app/english-coach': typeof AppEnglishCoachRoute
   '/app/hr': typeof AppHrRoute
   '/app/intervu': typeof AppIntervuRoute
   '/app/profile': typeof AppProfileRoute
@@ -175,7 +199,10 @@ export interface FileRoutesById {
   '/app/analytics': typeof AppAnalyticsRoute
   '/app/aptitude': typeof AppAptitudeRouteWithChildren
   '/app/coding': typeof AppCodingRouteWithChildren
+  '/app/conversation-practice': typeof AppConversationPracticeRoute
   '/app/daily': typeof AppDailyRoute
+  '/app/doubt-assistant': typeof AppDoubtAssistantRoute
+  '/app/english-coach': typeof AppEnglishCoachRoute
   '/app/hr': typeof AppHrRoute
   '/app/intervu': typeof AppIntervuRoute
   '/app/profile': typeof AppProfileRoute
@@ -198,7 +225,10 @@ export interface FileRouteTypes {
     | '/app/analytics'
     | '/app/aptitude'
     | '/app/coding'
+    | '/app/conversation-practice'
     | '/app/daily'
+    | '/app/doubt-assistant'
+    | '/app/english-coach'
     | '/app/hr'
     | '/app/intervu'
     | '/app/profile'
@@ -218,7 +248,10 @@ export interface FileRouteTypes {
     | '/app/analytics'
     | '/app/aptitude'
     | '/app/coding'
+    | '/app/conversation-practice'
     | '/app/daily'
+    | '/app/doubt-assistant'
+    | '/app/english-coach'
     | '/app/hr'
     | '/app/intervu'
     | '/app/profile'
@@ -239,7 +272,10 @@ export interface FileRouteTypes {
     | '/app/analytics'
     | '/app/aptitude'
     | '/app/coding'
+    | '/app/conversation-practice'
     | '/app/daily'
+    | '/app/doubt-assistant'
+    | '/app/english-coach'
     | '/app/hr'
     | '/app/intervu'
     | '/app/profile'
@@ -324,11 +360,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppHrRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/english-coach': {
+      id: '/app/english-coach'
+      path: '/english-coach'
+      fullPath: '/app/english-coach'
+      preLoaderRoute: typeof AppEnglishCoachRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/doubt-assistant': {
+      id: '/app/doubt-assistant'
+      path: '/doubt-assistant'
+      fullPath: '/app/doubt-assistant'
+      preLoaderRoute: typeof AppDoubtAssistantRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/daily': {
       id: '/app/daily'
       path: '/daily'
       fullPath: '/app/daily'
       preLoaderRoute: typeof AppDailyRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/conversation-practice': {
+      id: '/app/conversation-practice'
+      path: '/conversation-practice'
+      fullPath: '/app/conversation-practice'
+      preLoaderRoute: typeof AppConversationPracticeRouteImport
       parentRoute: typeof AppRoute
     }
     '/app/coding': {
@@ -432,7 +489,10 @@ interface AppRouteChildren {
   AppAnalyticsRoute: typeof AppAnalyticsRoute
   AppAptitudeRoute: typeof AppAptitudeRouteWithChildren
   AppCodingRoute: typeof AppCodingRouteWithChildren
+  AppConversationPracticeRoute: typeof AppConversationPracticeRoute
   AppDailyRoute: typeof AppDailyRoute
+  AppDoubtAssistantRoute: typeof AppDoubtAssistantRoute
+  AppEnglishCoachRoute: typeof AppEnglishCoachRoute
   AppHrRoute: typeof AppHrRoute
   AppIntervuRoute: typeof AppIntervuRoute
   AppProfileRoute: typeof AppProfileRoute
@@ -446,7 +506,10 @@ const AppRouteChildren: AppRouteChildren = {
   AppAnalyticsRoute: AppAnalyticsRoute,
   AppAptitudeRoute: AppAptitudeRouteWithChildren,
   AppCodingRoute: AppCodingRouteWithChildren,
+  AppConversationPracticeRoute: AppConversationPracticeRoute,
   AppDailyRoute: AppDailyRoute,
+  AppDoubtAssistantRoute: AppDoubtAssistantRoute,
+  AppEnglishCoachRoute: AppEnglishCoachRoute,
   AppHrRoute: AppHrRoute,
   AppIntervuRoute: AppIntervuRoute,
   AppProfileRoute: AppProfileRoute,
