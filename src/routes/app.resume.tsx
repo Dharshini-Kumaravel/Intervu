@@ -12,6 +12,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth-context";
 import { FileText, Sparkles, Loader2, Upload, ArrowLeft } from "lucide-react";
 import { toast } from "sonner";
+import { analyzeResume } from "@/lib/ai-service";
 
 export const Route = createFileRoute("/app/resume")({ component: Resume });
 
@@ -34,8 +35,8 @@ function Resume() {
     if (!text.trim() || !user) return;
     setLoading(true); setAnalysis(null);
     try {
-      const { data, error } = await supabase.functions.invoke("analyze-resume", { body: { resumeText: text, targetRole: role } });
-      if (error || data?.error) throw new Error(data?.error || error?.message);
+      const data = await analyzeResume(text, role);
+      if (!data || data.error) throw new Error(data?.error || "Failed to analyze resume");
       setAnalysis(data);
       await supabase.from("resume_analyses").insert({
         user_id: user.id, raw_text: text.slice(0, 8000), target_role: role,

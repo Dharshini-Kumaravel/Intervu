@@ -12,6 +12,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth-context";
 import { Mic, Send, Loader2, MessageSquare, Sparkles, Play, StopCircle } from "lucide-react";
 import { toast } from "sonner";
+import { hrInterviewAction } from "@/lib/ai-service";
 
 export const Route = createFileRoute("/app/hr")({ component: HR });
 
@@ -33,10 +34,8 @@ function HR() {
   const ask = async (history: Turn[]) => {
     setLoading(true);
     try {
-      const { data } = await supabase.functions.invoke("hr-interview", {
-        body: { action: "next_question", role, transcript: history }
-      });
-      if (data?.error) throw new Error(data.error);
+      const data = await hrInterviewAction("next_question", { role, transcript: history });
+      if (!data || data.error) throw new Error(data?.error || "Failed to fetch question");
       setCurrentQ(data?.question || "Tell me about yourself.");
     } catch (e: any) { toast.error(e.message); } finally { setLoading(false); }
   };
@@ -47,9 +46,8 @@ function HR() {
     if (!answer.trim()) return;
     setLoading(true);
     try {
-      const { data: ev } = await supabase.functions.invoke("hr-interview", {
-        body: { action: "evaluate_answer", lastAnswer: { question: currentQ, answer } }
-      });
+      const ev = await hrInterviewAction("evaluate_answer", { lastAnswer: { question: currentQ, answer } });
+      if (!ev || ev.error) throw new Error(ev?.error || "Failed to evaluate answer");
       const newTurn: Turn = { question: currentQ, answer, eval: ev };
       const updated = [...turns, newTurn];
       setTurns(updated); setAnswer("");
@@ -61,9 +59,8 @@ function HR() {
   const finish = async (final: Turn[]) => {
     setLoading(true);
     try {
-      const { data: rep } = await supabase.functions.invoke("hr-interview", {
-        body: { action: "final_report", transcript: final }
-      });
+      const rep = await hrInterviewAction("final_report", { transcript: final });
+      if (!rep || rep.error) throw new Error(rep?.error || "Failed to generate report");
       setReport(rep);
       if (user) {
         await supabase.from("hr_sessions").insert({
